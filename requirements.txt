@@ -4,3 +4,4 @@ numpy
 Pillow
 nltk
 password-strength
+opencv-python-headless
