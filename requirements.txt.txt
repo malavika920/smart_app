@@ -1,6 +1,0 @@
-streamlit
-opencv-python
-numpy
-Pillow
-nltk
-password-strength
