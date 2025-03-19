@@ -1,7 +1,8 @@
-# smart_app
+# <span style="color: green"> SMART APP </span>
 
 ## Overview
 This app provide an interactive platform for users to explore functionalities such as password generation using images, text setniment analysis, and image to sketch conversion
+(This is done as a part of academic assignment {ETE 2}) 
 
 ## The Smart App
 This app is generated using streamlit feature and python, and has the following features:
