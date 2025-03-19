@@ -1,20 +1,19 @@
 import streamlit as st
 import cv2
 import numpy as np
-from PIL import Image  # Changed to appropriate import
+from PIL import Image  
 import hashlib
 import re
 import math
 import nltk
-from nltk.sentiment import SentimentIntensityAnalyzer  # Fixed class name
-from password_strength import PasswordPolicy, PasswordStats  # Fixed class names
-from io import BytesIO  # Fixed import from `bytesio` to `BytesIO`
+from nltk.sentiment import SentimentIntensityAnalyzer  
+from password_strength import PasswordPolicy, PasswordStats  
+from io import BytesIO  
 
-# Download nltk resources (only need to run this once)
 nltk.download('vader_lexicon')
 nltk.download('punkt')
 nltk.download('stopwords')
-# Use custom CSS to change the background color
+
 st.markdown(
     """
     <style>
@@ -55,6 +54,9 @@ st.markdown(
     [data-testid="stTextAreaRootElement"] textarea {
         background-color: #D8BFD8;
     }
+    [data-testid="stHeadingWithActionElements"] h2 {
+        color: #D8BFD8;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -65,8 +67,7 @@ st.markdown(
 st.title("Smart App with Multiple Features")
 st.sidebar.title("Navigation")
 option = st.sidebar.radio("Choose a feature:", ("Password Generator from Image", "Text Sentiment Analysis", "Image-to-Sketch Converter"))
-
-# For Password Generator from Image
+#for the password generater
 if option == "Password Generator from Image":
     st.header("Password Generator Based on Image")
     uploaded_file = st.file_uploader("Upload an image to generate password", type=["png", "jpg", "jpeg"])
@@ -76,15 +77,15 @@ if option == "Password Generator from Image":
         image = Image.open(uploaded_file)
         st.image(image, caption="Uploaded Image", use_container_width=True)
 
-        # Convert image to bytes
+    
         image_bytes = BytesIO()
         image.save(image_bytes, format='PNG')
         image_bytes = image_bytes.getvalue()
 
-        # Create a hash of the image
+        # creating a hash from the image
         image_hash = hashlib.sha256(image_bytes).hexdigest()
 
-        # Use the first 12 characters of the hash as a password
+        # i have used the first 12 characters of the hash as a password
         password = image_hash[:12]
         st.write(f"Generated password (for this image): {password}")
 
@@ -102,7 +103,6 @@ elif option == "Text Sentiment Analysis":
     text_input = st.text_area("Enter your text here:", "")
 
     if text_input:
-        # Perform sentiment analysis
         sid = SentimentIntensityAnalyzer()
         sentiment_score = sid.polarity_scores(text_input)
         st.subheader("Sentiment Analysis Result:")
@@ -126,7 +126,6 @@ elif option == "Image-to-Sketch Converter":
 
         sketch_intensity = st.slider("Sketch Intensity", min_value=1, max_value=20, value=10, step=1)
 
-        # Convert to sketch
         gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         inverted_image = cv2.bitwise_not(gray_image)
         blurred_image = cv2.GaussianBlur(inverted_image, (21, 21), sigmaX=0, sigmaY=0)
